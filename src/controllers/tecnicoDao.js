@@ -57,5 +57,6 @@ class TecnicoDao{
             }
         }
       }
+      export {TecnicoDao};
         
  

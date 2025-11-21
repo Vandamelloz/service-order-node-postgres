@@ -1,0 +1,26 @@
+Criação de tebelas feita pelo terminal do Postgre
+
+
+CREATE TABLE clientes (
+  id SERIAL PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL,
+  telefone VARCHAR(20),
+  endereco TEXT
+);
+
+CREATE TABLE tecnicos (
+  id SERIAL PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL,
+  especialidade VARCHAR(50)
+);
+
+CREATE TABLE ordens (
+  id SERIAL PRIMARY KEY,
+  titulo VARCHAR(100) NOT NULL,
+  descricao TEXT,
+  status VARCHAR(20) DEFAULT 'Aberta',
+  cliente_id INTEGER REFERENCES clientes(id) ON DELETE SET NULL,
+  tecnico_id INTEGER REFERENCES tecnicos(id) ON DELETE SET NULL,
+  data_abertura TIMESTAMP DEFAULT NOW(),
+  data_fechamento TIMESTAMP NULL
+);

@@ -1,4 +1,5 @@
 node_modules
+estudonode
 dist
 .env
 .DS_Store
