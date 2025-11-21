@@ -1,0 +1,23 @@
+{
+  "name": "projetods",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+ 
+
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vandamelloz/data_dashboard-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vandamelloz/data_dashboard-project/issues"
+  },
+  "homepage": "https://github.com/Vandamelloz/data_dashboard-project#readme"
+}
