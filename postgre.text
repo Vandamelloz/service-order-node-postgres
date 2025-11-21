@@ -1,0 +1,74 @@
+
+# 🗃️ **Tabela de Comandos Essenciais do PostgreSQL**
+
+### **1. Acessar o PostgreSQL**
+
+| Ação                          | Comando                         | Explicação                                  |
+| ----------------------------- | ------------------------------- | ------------------------------------------- |
+| Entrar no PostgreSQL          | `sudo -u postgres psql`         | Acessa o psql como o usuário administrador. |
+| Entrar com usuário específico | `psql -U nomeusuario -d nomedb` | Loga com usuário e em um banco específico.  |
+| Sair do psql                  | `\q`                            | Fecha o terminal do PostgreSQL.             |
+
+---
+
+### **2. Gerenciar Bancos de Dados**
+
+| Ação                  | Comando                 | Explicação                                     |
+| --------------------- | ----------------------- | ---------------------------------------------- |
+| Criar um banco        | `CREATE DATABASE nome;` | Cria um novo banco.                            |
+| Ver bancos existentes | `\l`                    | Lista todos os bancos.                         |
+| Conectar a um banco   | `\c nome;`              | Entra dentro do banco.                         |
+| Excluir banco         | `DROP DATABASE nome;`   | Apaga um banco (só se ninguém estiver usando). |
+
+---
+
+### **3. Gerenciar Usuários (Roles)**
+
+| Ação                        | Comando                                                   | Explicação                            |
+| --------------------------- | --------------------------------------------------------- | ------------------------------------- |
+| Criar usuário               | `CREATE USER nome WITH PASSWORD 'senha';`                 | Cria um usuário normal.               |
+| Criar usuário administrador | `CREATE ROLE nome WITH LOGIN SUPERUSER PASSWORD 'senha';` | Cria usuário com privilégios totais.  |
+| Alterar senha               | `ALTER USER nome WITH PASSWORD 'novaSenha';`              | Atualiza a senha.                     |
+| Ver usuários                | `\du`                                                     | Lista todos os usuários e permissões. |
+| Deletar usuário             | `DROP USER nome;`                                         | Remove usuário.                       |
+
+---
+
+### **4. Gerenciar Permissões**
+
+| Ação                         | Comando                                                | Explicação              |
+| ---------------------------- | ------------------------------------------------------ | ----------------------- |
+| Dar permissão total no banco | `GRANT ALL PRIVILEGES ON DATABASE nome TO usuario;`    | Libera tudo no banco.   |
+| Dar permissão em tabelas     | `GRANT ALL ON TABLE tabela TO usuario;`                | Libera acesso à tabela. |
+| Revogar permissões           | `REVOKE ALL PRIVILEGES ON DATABASE nome FROM usuario;` | Remove permissões.      |
+
+---
+
+### **5. Criar e Manipular Tabelas**
+
+| Ação                    | Comando                                                   |
+| ----------------------- | --------------------------------------------------------- |
+| Criar tabela            | `CREATE TABLE tabela (id SERIAL PRIMARY KEY, nome TEXT);` |
+| Ver tabelas             | `\dt`                                                     |
+| Ver estrutura da tabela | `\d nome_da_tabela`                                       |
+| Inserir dado            | `INSERT INTO tabela (nome) VALUES ('Ana');`               |
+| Buscar dados            | `SELECT * FROM tabela;`                                   |
+| Atualizar dados         | `UPDATE tabela SET nome='João' WHERE id=1;`               |
+| Deletar dados           | `DELETE FROM tabela WHERE id=1;`                          |
+| Excluir tabela          | `DROP TABLE tabela;`                                      |
+
+---
+
+### **6. Utilitários úteis**
+
+| Ação                          | Comando             |
+| ----------------------------- | ------------------- |
+| Ver versão                    | `SELECT version();` |
+| Limpar terminal               | `\! clear`          |
+| Ajuda geral                   | `\?`                |
+| Ajuda SQL                     | `\h`                |
+| Ajuda para comando específico | `\h SELECT`         |
+
+---
+
+
