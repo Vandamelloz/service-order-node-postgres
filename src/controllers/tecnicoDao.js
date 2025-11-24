@@ -1,4 +1,4 @@
-import {Tecnico} from 'models/tecnicos.js';
+import {Tecnico} from '.../models/tecnicos.js';
 
 class TecnicoDao{
     static async listAll(){
@@ -56,7 +56,12 @@ class TecnicoDao{
             throw err;
             }
         }
-      }
+        static async formEdit(req, res) {
+            const tecnico = await TecnicoDao.findById(req.params.id);
+            res.render("tecnicos/edit", { Tecnico });
+  }
+  }
+
       export {TecnicoDao};
         
  

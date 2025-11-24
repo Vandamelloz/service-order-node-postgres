@@ -1,4 +1,4 @@
-import {Cliente} from 'models/cliente.js';
+import {Cliente} from '.../models/cliente.js';
 
 class ClienteDao{
     //métodos estáticos assíncronos= posso chamálos sem instanciar a classe
@@ -59,5 +59,9 @@ class ClienteDao{
             throw err;
             }
         }
+            static async formEdit(req, res) {
+            const cliente = await ClienteDao.findById(req.params.id);
+            res.render("clientes/edit", { Cliente });
+  }
      }
 export {ClienteDao}; //exporta a classe para ser usada em outros arquivos

@@ -1,4 +1,5 @@
-import {Ordens} from 'models/ordens.js';
+import {Ordens} from '.../models/ordens.js';
+import { Ordem } from '../models/ordens';
 
 class OrdensDao{
     static async listAll(){
@@ -106,5 +107,9 @@ class OrdensDao{
         throw err;
     }
     }
+        static async formEdit(req, res) {
+            const ordens = await OrdensDao.findById(req.params.id);
+            res.render("ordens/edit", { Ordem });
+  }
 }
 export {OrdensDao};
