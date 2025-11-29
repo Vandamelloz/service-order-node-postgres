@@ -1,115 +1,94 @@
-import {Ordens} from '.../models/ordens.js';
-import { Ordem } from '../models/ordens';
+import { Ordem as Ordens } from "../models/ordens.js";
+import { Cliente } from "../models/cliente.js"; // Necessário para os dropdowns
+import { Tecnico } from "../models/tecnicos.js"; // Necessário para os dropdowns (se tiver model Tecnico)
 
-class OrdensDao{
-    static async listAll(){
-        try{
-            const ordens= await Ordens.findAll();
-            return ordens;
-            
-        }catch(err){
-            throw new Error('Erro ao listar ordens: '+ err.message);
-            throw err;
-        }
-    }
-    static async findById(id){
-        try{
-            const ordem= await Ordens.findByPk(id);
-            return ordem;
-        }catch(err){
-            throw new Error('Erro ao buscar ordem por ID: '+ err.message);
-            throw err;
-        }
-    }
-    static async create(data){
-        try{
-            const novaOrdem= await Ordens.create(data);
-            return novaOrdem;
-        }catch(err){
-            throw new Error('Erro ao criar ordem: '+ err.message);
-            throw err;
-        }
-    }
-    static async update(id, data){
-        //Os colchetes [atualizado] são destructuring assignment para pegar diretamente o número de linhas afetadas do array retornado pelo Sequelize.
-        try{
-            const [atualizarOrdem]= await Ordens.update(data, {
-                where:{
-                    id:id
-                }
-            })
-            return atualizarOrdem; //número de linhas afetadas
-        }catch(err){
-            throw new Error('Erro ao atualizar ordem: '+ err.message);
-            throw err;
-        }
-    }
-    static async delete(id){
-        try{
-            const deletarOrdem= await Ordens.destroy({
-                where:{
-                    id:id
-                }
-            })
-            return deletarOrdem; //número de linhas afetadas
-        }catch(err){
-            throw new Error('Erro ao deletar ordem: '+ err.message);
-            throw err;
-        }
-    }
-    static async findByIdCliente(cliente_id){
-        try{
-            const ordens= await Ordens.findAll({
-                where:{
-                    cliente_id:cliente_id
-                }
+class OrdensController {
+
+    // [R] READ ALL - Lista as ordens (com dados do Cliente e Tecnico juntos)
+    static async listAll(req, res) {
+        try {
+            const ordens = await Ordens.findAll({
+                include: ["cliente", "tecnico"], // Traz os dados das tabelas relacionadas
+                raw: true,  // Importante para Handlebars
+                nest: true  // Organiza: ordem.cliente.nome ao invés de ordem.cliente.nome
             });
-            return ordens;
-        }catch(err){
-            throw new Error('Erro ao buscar ordens por ID do cliente: '+ err.message);
-            throw err;
+            res.render("ordens/index", { ordens });
+        } catch (err) {
+            console.error(err);
+            res.status(500).send("Erro ao listar ordens: " + err.message);
         }
     }
-    static async findByIdTecnico(tecnico_id){
-        try{
-            const ordens= await Ordens.findAll({
-                where:{
-                    tecnico_id:tecnico_id
-                }
 
-            })
-        }catch(err){
-            throw new Error('Erro ao buscar ordens por ID do técnico: '+ err.message);
-            throw err;
+    // [C] CREATE (GET) - Formulário precisa de Clientes e Técnicos
+    static async createForm(req, res) {
+        try {
+            // Busca listas para preencher o <select> no HTML
+            const clientes = await Cliente.findAll({ raw: true });
+            const tecnicos = await Tecnico.findAll({ raw: true }); 
+            
+            res.render("ordens/new", { clientes, tecnicos });
+        } catch (err) {
+            console.error(err);
+            res.status(500).send("Erro ao carregar formulário.");
         }
     }
-    static async updateStatus(id, status){
-        try{
-            const [atualizarStatus]= await Ordens.update({status:status}, {
-                where:{
-                    id:id
-                }
-            })
-            return atualizarStatus; //número de linhas afetadas
-        }catch(err){
-            throw new Error('Erro ao atualizar status da ordem: '+ err.message);
-            throw err;
+
+    // [C] CREATE (POST) - Salva a ordem
+    static async create(req, res) {
+        try {
+            // Supondo que seu form envie: descricao, clienteId, tecnicoId, status
+            await Ordens.create(req.body);
+            res.redirect("/ordens");
+        } catch (err) {
+            console.error(err);
+            res.status(500).send("Erro ao criar ordem.");
         }
     }
-    static async GetByidFull(id){
-        //retornar uma ordem com os dados do cliente e do técnico, pode usar include do Sequelize:
-        try{
-        return await Ordens.findByPk(id, {
-            include: ['cliente', 'tecnico'] 
-        })
-    }catch(err){
-        throw new Error('Erro ao buscar ordem completa por ID: '+ err.message);
-        throw err;
+
+    // [U] UPDATE (GET) - Formulário de Edição
+    static async formEdit(req, res) {
+        try {
+            const ordem = await Ordens.findByPk(req.params.id, { 
+                raw: true,
+                nest: true // Necessário se quiser mostrar o nome atual do cliente
+            });
+            
+            // Também precisamos das listas aqui para permitir TROCAR o cliente/técnico
+            const clientes = await Cliente.findAll({ raw: true });
+            const tecnicos = await Tecnico.findAll({ raw: true });
+
+            if (ordem) {
+                res.render("ordens/edit", { ordem, clientes, tecnicos });
+            } else {
+                res.redirect("/ordens");
+            }
+        } catch (err) {
+            console.error(err);
+            res.status(500).send("Erro ao buscar ordem.");
+        }
     }
+
+    // [U] UPDATE (POST) - Atualiza
+    static async update(req, res) {
+        try {
+            await Ordens.update(req.body, { where: { id: req.params.id } });
+            res.redirect("/ordens");
+        } catch (err) {
+            console.error(err);
+            res.status(500).send("Erro ao atualizar ordem.");
+        }
     }
-        static async formEdit(req, res) {
-            const ordens = await OrdensDao.findById(req.params.id);
-            res.render("ordens/edit", { Ordem });
-  }
+
+    // [D] DELETE
+    static async delete(req, res) {
+        try {
+            await Ordens.destroy({ where: { id: req.params.id } });
+            res.redirect("/ordens");
+        } catch (err) {
+            console.error(err);
+            res.status(500).send("Erro ao deletar ordem.");
+        }
+    }
 }
-export {OrdensDao};
+
+export { OrdensController };

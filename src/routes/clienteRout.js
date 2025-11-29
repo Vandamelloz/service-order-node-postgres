@@ -1,26 +1,23 @@
 import { Router } from "express";
-import { ClienteDao } from "../controllers/clienteDao.js";
+import { ClienteController } from "../controllers/clienteDao.js"; // Importe com o nome novo se mudar
 
 const router = Router();
 
-// Listar todos os clientes
-router.get("/", ClienteDao.listAll);
+// Listar (Home dos Clientes)
+router.get("/", ClienteController.listAll);
 
-// Form para criar cliente
-router.get("/new", ClienteDao.findById);
+// Criar (Formulário e Ação)
+router.get("/new", ClienteController.createForm);
+router.post("/save", ClienteController.create); // Ajuste o action do form para /clientes/save
 
-// Criar cliente
-router.post("/create", ClienteDao.create);
+// Editar (Formulário e Ação)
+router.get("/edit/:id", ClienteController.formEdit);
+router.post("/update/:id", ClienteController.update); // Ajuste o action do form
 
-// Form para editar cliente
-router.get("/edit/:id", ClienteDao.formEdit);
-
-// Atualizar cliente
-router.post("/update/:id", ClienteDao.update);
-
-// Deletar cliente
-router.post("/delete/:id", ClienteDao.delete);
+// Deletar
+router.post("/delete/:id", ClienteController.delete);
 
 export default router;
+
 
 

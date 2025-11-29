@@ -1,0 +1,14 @@
+<div class="card">
+    <h2>Novo Técnico</h2>
+    <form action="/tecnicos/save" method="POST">
+        <label>Nome do Técnico:</label>
+        <input type="text" name="nome" required>
+
+        <label>Especialidade:</label>
+        <input type="text" name="especialidade" placeholder="Ex: Elétrica, Hidráulica, TI...">
+
+        <br>
+        <button type="submit" class="btn btn-primary">Salvar Técnico</button>
+        <a href="/tecnicos" class="btn" style="background:#7f8c8d; color:white;">Cancelar</a>
+    </form>
+</div>

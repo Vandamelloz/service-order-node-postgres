@@ -1,0 +1,30 @@
+<div class="card">
+    <h2>Nova Ordem de Serviço</h2>
+    <form action="/ordens/save" method="POST">
+        <label>Título:</label>
+        <input type="text" name="titulo" placeholder="Ex: Manutenção de PC" required>
+
+        <label>Descrição Detalhada:</label>
+        <textarea name="descricao" required></textarea>
+
+        <label>Cliente Solicitante:</label>
+        <select name="clienteId" required>
+            <option value="">Selecione...</option>
+            {{#each clientes}}
+                <option value="{{this.id}}">{{this.nome}}</option>
+            {{/each}}
+        </select>
+
+        <label>Técnico Responsável:</label>
+        <select name="tecnicoId" required>
+            <option value="">Selecione...</option>
+            {{#each tecnicos}}
+                <option value="{{this.id}}">{{this.nome}} - {{this.especialidade}}</option>
+            {{/each}}
+        </select>
+
+        <br>
+        <button type="submit" class="btn btn-primary">Abrir O.S.</button>
+        <a href="/ordens" class="btn" style="background:#7f8c8d; color:white;">Cancelar</a>
+    </form>
+</div>

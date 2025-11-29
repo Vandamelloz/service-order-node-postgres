@@ -1,0 +1,20 @@
+<div class="card">
+    <h2>Novo Cliente</h2>
+    <form action="/clientes/save" method="POST">
+        <label>Nome Completo:</label>
+        <input type="text" name="nome" placeholder="Ex: João da Silva" required>
+
+        <label>Email:</label>
+        <input type="email" name="email" placeholder="Ex: joao@email.com">
+
+        <label>Telefone:</label>
+        <input type="text" name="telefone" placeholder="(XX) XXXXX-XXXX">
+
+        <label>Endereço:</label>
+        <input type="text" name="endereco" placeholder="Rua, Número, Bairro">
+
+        <br>
+        <button type="submit" class="btn btn-primary">Salvar Cliente</button>
+        <a href="/clientes" class="btn" style="background:#7f8c8d; color:white;">Cancelar</a>
+    </form>
+</div>

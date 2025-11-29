@@ -1,0 +1,36 @@
+<div class="card">
+    <h2>👥 Gerenciar Clientes</h2>
+    <a href="/clientes/new" class="btn btn-primary">+ Novo Cliente</a>
+
+    {{#if clientes}}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each clientes}}
+                <tr>
+                    <td>{{this.id}}</td>
+                    <td>{{this.nome}}</td>
+                    <td>{{this.email}}</td>
+                    <td>{{this.telefone}}</td>
+                    <td>
+                        <a href="/clientes/edit/{{this.id}}" class="btn btn-edit">Editar</a>
+                        <form action="/clientes/delete/{{this.id}}" method="POST" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir este cliente?');">
+                            <button type="submit" class="btn btn-delete">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    {{else}}
+        <p>Nenhum cliente cadastrado.</p>
+    {{/if}}
+</div>

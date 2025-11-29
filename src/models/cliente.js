@@ -1,16 +1,20 @@
-import {dataTypes} from 'sequelize';
-import {sequelize }from 'src/db.js';
+import { DataTypes } from 'sequelize'; // "DataTypes" com D maiúsculo
+import { sequelize } from "../db.js"; 
 
-export const Cliente = sequelize.define('Cliente',{
-    id:{
-        type:dataTypes.INTEGER,
-        primaryKey:true,
-        autoIncrement:true
+export const Cliente = sequelize.define('Cliente', {
+    id: {
+        type: DataTypes.INTEGER, // "DataTypes"
+        primaryKey: true,
+        autoIncrement: true
     },
-    nome:{
-        type:dataTypes.STRING,
-        allowNull:false
+    nome: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
-  telefone: DataTypes.STRING,
-  endereco: DataTypes.STRING
-})
+    telefone: {
+        type: DataTypes.STRING
+    },
+    endereco: {
+        type: DataTypes.STRING
+    }
+});

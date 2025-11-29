@@ -1,0 +1,20 @@
+<div class="card">
+    <h2>Editar Cliente</h2>
+    <form action="/clientes/update/{{cliente.id}}" method="POST">
+        <label>Nome:</label>
+        <input type="text" name="nome" value="{{cliente.nome}}" required>
+
+        <label>Email:</label>
+        <input type="email" name="email" value="{{cliente.email}}">
+
+        <label>Telefone:</label>
+        <input type="text" name="telefone" value="{{cliente.telefone}}">
+
+        <label>Endereço:</label>
+        <input type="text" name="endereco" value="{{cliente.endereco}}">
+
+        <br>
+        <button type="submit" class="btn btn-primary">Atualizar</button>
+        <a href="/clientes" class="btn" style="background:#7f8c8d; color:white;">Cancelar</a>
+    </form>
+</div>

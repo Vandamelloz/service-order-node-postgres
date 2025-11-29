@@ -1,24 +1,20 @@
 import { Router } from "express";
-import { TecnicoDao } from "../controllers/tecnicoDao.js";
+import { TecnicoController } from "../controllers/tecnicoDao.js";
 
 const router = Router();
 
-// Listar técnicos
-router.get("/", TecnicoDao.listAll);
+// Listar
+router.get("/", TecnicoController.listAll);
 
-// Form criação
-router.get("/new", TecnicoDao.findById);
+// Criar
+router.get("/new", TecnicoController.createForm);
+router.post("/save", TecnicoController.create);
 
-// Criar técnico
-router.post("/create", TecnicoDao.create);
+// Editar
+router.get("/edit/:id", TecnicoController.formEdit);
+router.post("/update/:id", TecnicoController.update);
 
-// Form edição
-router.get("/edit/:id", TecnicoDao.formEdit);
-
-// Atualizar técnico
-router.post("/update/:id", TecnicoDao.update);
-
-// Delete
-router.post("/delete/:id", TecnicoDao.delete);
+// Deletar
+router.post("/delete/:id", TecnicoController.delete);
 
 export default router;

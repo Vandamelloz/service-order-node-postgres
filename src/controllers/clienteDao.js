@@ -1,67 +1,84 @@
-import {Cliente} from '.../models/cliente.js';
+import { Cliente } from "../models/cliente.js";
 
-class ClienteDao{
-    //métodos estáticos assíncronos= posso chamálos sem instanciar a classe
-    static async listAll(){
-       try{
-        const clientes= await Cliente.findAll(); //sequelize busca todos os registros da tabela
-        return clientes;
-       }catch(err){
-        throw new Error('Erro ao listar clientes: '+ err.message);
-        throw err;
-       }
+class ClienteController {
 
-    }
-    static async findById(id){
-       try{
-        const cliente= await Cliente.findByPk(id); //busca por chave primária
-        return cliente;
-       } 
-       catch(err){  
-       throw new Error('Erro ao buscar cliente por ID: '+ err.message);
-       throw err;
-         }
-    }
-    static async create(data){
-        try{
-            const novoCliente= await Cliente.create(data);
-            return novoCliente;
-        }
-        catch(err){
-            throw new Error('Erro ao criar cliente: '+ err.message);
-            throw err;
-        }
-    
-    }
-    static async update(id, data){
-        try{
-            const [atualizarCliente]= await Cliente.update(data, {
-                where:{
-                    id:id
-                }
-            })
-            return atualizarCliente; //número de linhas afetadas
-        }catch(err){
-            throw new Error('Erro ao atualizar cliente: '+ err.message);
-            throw err;
+    // [R] READ ALL - Busca e Renderiza a Lista
+    static async listAll(req, res) {
+        try {
+            const clientes = await Cliente.findAll({ raw: true }); // 'raw: true' ajuda no Handlebars
+            // Renderiza a view 'clientes/index.hbs' passando a lista
+            res.render("clientes/index", { clientes });
+        } catch (err) {
+            console.error(err);
+            res.status(500).send("Erro ao listar clientes: " + err.message);
         }
     }
-     static async delete(id){
-        try{
-            const deletarCliente= await Cliente.destroy({
-                where:{
-                    id:id
-                }
-            })
-            return deletarCliente; //número de linhas afetadas
-        }catch(err){
-            throw new Error('Erro ao deletar cliente: '+ err.message);
-            throw err;
+
+    // [C] CREATE (GET) - Renderiza o formulário de cadastro
+    static createForm(req, res) {
+        res.render("clientes/new"); // Renderiza 'src/views/clientes/new.hbs'
+    }
+
+    // [C] CREATE (POST) - Recebe dados e Salva
+    static async create(req, res) {
+        try {
+            // Pega os dados do formulário (req.body)
+            const { nome, email, telefone } = req.body; 
+            await Cliente.create({ nome, email, telefone });
+            
+            // Redireciona para a listagem após salvar
+            res.redirect("/clientes");
+        } catch (err) {
+            console.error(err);
+            res.status(500).send("Erro ao criar cliente.");
+        }
+    }
+
+    // [U] UPDATE (GET) - Renderiza formulário de edição
+    static async formEdit(req, res) {
+        try {
+            // Busca pelo ID da URL (req.params.id)
+            const cliente = await Cliente.findByPk(req.params.id, { raw: true });
+            
+            if (cliente) {
+                res.render("clientes/edit", { cliente });
+            } else {
+                res.redirect("/clientes");
             }
+        } catch (err) {
+            console.error(err);
+            res.status(500).send("Erro ao buscar cliente.");
         }
-            static async formEdit(req, res) {
-            const cliente = await ClienteDao.findById(req.params.id);
-            res.render("clientes/edit", { Cliente });
-  }
-     }
-export {ClienteDao}; //exporta a classe para ser usada em outros arquivos
+    }
+
+    // [U] UPDATE (POST) - Salva as alterações
+    static async update(req, res) {
+        try {
+            const id = req.params.id;
+            const { nome, email, telefone } = req.body;
+            
+            await Cliente.update(
+                { nome, email, telefone },
+                { where: { id: id } }
+            );
+            
+            res.redirect("/clientes");
+        } catch (err) {
+            console.error(err);
+            res.status(500).send("Erro ao atualizar cliente.");
+        }
+    }
+
+    // [D] DELETE (POST) - Remove o cliente
+    static async delete(req, res) {
+        try {
+            await Cliente.destroy({ where: { id: req.params.id } });
+            res.redirect("/clientes");
+        } catch (err) {
+            console.error(err);
+            res.status(500).send("Erro ao deletar cliente.");
+        }
+    }
+}
+
+export { ClienteController };

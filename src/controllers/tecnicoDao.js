@@ -1,67 +1,76 @@
-import {Tecnico} from '.../models/tecnicos.js';
+import { Tecnico } from "../models/tecnicos.js";
 
-class TecnicoDao{
-    static async listAll(){
-        try{
-            const tecnico= await Tecnico.findAll();
-            return tecnico;
+class TecnicoController {
 
-        }catch(err){
-            throw new Error('Erro ao listar técnicos: '+ err.message);
-            throw err; //re-lançar o erro para tratamento posterior
+    // [R] READ ALL - Lista e renderiza a view
+    static async listAll(req, res) {
+        try {
+            const tecnicos = await Tecnico.findAll({ raw: true }); // raw: true facilita pro Handlebars
+            res.render("tecnicos/index", { tecnicos });
+        } catch (err) {
+            console.error(err);
+            res.status(500).send("Erro ao listar técnicos: " + err.message);
         }
     }
-    static async findById(id){
-        try{
-            const tecnico= await Tecnico.findByPk(id);
-            return tecnico;
-        }catch(err){
-            throw new Error('Erro ao buscar técnico por ID: '+ err.message);
-            throw err;
+
+    // [C] CREATE (GET) - Mostra o formulário de cadastro
+    static createForm(req, res) {
+        res.render("tecnicos/new");
+    }
+
+    // [C] CREATE (POST) - Recebe os dados e salva
+    static async create(req, res) {
+        try {
+            // Supondo que Tecnico tenha nome e especialidade
+            await Tecnico.create(req.body); 
+            res.redirect("/tecnicos");
+        } catch (err) {
+            console.error(err);
+            res.status(500).send("Erro ao criar técnico: " + err.message);
         }
     }
-    static async create(data){
-        try{
-            const novoTecnico= await Tecnico.create(data);
-            return novoTecnico;
-        }catch(err){
-            throw new Error('Erro ao criar técnico: '+ err.message);
-            throw err;
-        }
-    }
-    static async update(id, data){
-      try{
-            const [atualizarTecnico]= await Tecnico.update(data, {
-                where:{
-                    id:id
-                }
-            })
-            return atualizarTecnico; //número de linhas afetadas
-        }catch(err){
-            throw new Error('Erro ao atualizar técnico: '+ err.message);
-            throw err;
-        }
-      }
-      static async delete(id){
-        try{
-            const deletarTecnico= await Tecnico.destroy({
-                where:{
-                    id:id
-                }
-            })
-            return deletarTecnico; //número de linhas afetadas
-        }
-        catch(err){
-            throw new Error('Erro ao deletar técnico: '+ err.message);
-            throw err;
+
+    // [U] UPDATE (GET) - Busca o técnico e mostra formulário de edição
+    static async formEdit(req, res) {
+        try {
+            const tecnico = await Tecnico.findByPk(req.params.id, { raw: true });
+            
+            if (tecnico) {
+                res.render("tecnicos/edit", { tecnico });
+            } else {
+                res.redirect("/tecnicos");
             }
+        } catch (err) {
+            console.error(err);
+            res.status(500).send("Erro ao buscar técnico.");
         }
-        static async formEdit(req, res) {
-            const tecnico = await TecnicoDao.findById(req.params.id);
-            res.render("tecnicos/edit", { Tecnico });
-  }
-  }
+    }
 
-      export {TecnicoDao};
-        
- 
+    // [U] UPDATE (POST) - Atualiza os dados no banco
+    static async update(req, res) {
+        try {
+            await Tecnico.update(req.body, {
+                where: { id: req.params.id }
+            });
+            res.redirect("/tecnicos");
+        } catch (err) {
+            console.error(err);
+            res.status(500).send("Erro ao atualizar técnico: " + err.message);
+        }
+    }
+
+    // [D] DELETE (POST) - Remove o técnico
+    static async delete(req, res) {
+        try {
+            await Tecnico.destroy({
+                where: { id: req.params.id }
+            });
+            res.redirect("/tecnicos");
+        } catch (err) {
+            console.error(err);
+            res.status(500).send("Erro ao deletar técnico: " + err.message);
+        }
+    }
+}
+
+export { TecnicoController };

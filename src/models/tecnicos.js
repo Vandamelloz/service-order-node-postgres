@@ -1,14 +1,16 @@
-import {dataTypes} from 'sequelize';
-import {sequelize} from 'src/db.js';
-
-export const Tecnico= sequelize.define('Tecnico', {
-    id:{
-        type:dataTypes.INTEGER,
-        primaryKey:true,
-},
-    nome:{
-        type:dataTypes.STRING,
-        allowNull:false
+import { DataTypes } from 'sequelize'; 
+import { sequelize } from '../db.js'; 
+export const Tecnico = sequelize.define('Tecnico', {
+    id: {
+        type: DataTypes.INTEGER, // "DataTypes"
+        primaryKey: true,
+        autoIncrement: true // Adicionei isso para o ID crescer sozinho (1, 2, 3...)
     },
-    especialidade: dataTypes.STRING
-    })
+    nome: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    especialidade: {
+        type: DataTypes.STRING
+    }
+});

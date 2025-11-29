@@ -1,0 +1,42 @@
+<div class="card">
+    <h2>📝 Ordens de Serviço</h2>
+    <a href="/ordens/new" class="btn btn-primary">+ Nova O.S.</a>
+
+    {{#if ordens}}
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Título</th>
+                    <th>Cliente</th>
+                    <th>Técnico</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each ordens}}
+                <tr>
+                    <td>{{this.id}}</td>
+                    <td>{{this.titulo}}</td>
+                    <td>{{this.cliente.nome}}</td>
+                    <td>{{this.tecnico.nome}}</td>
+                    <td>
+                        <span style="padding: 4px 8px; border-radius: 4px; background: #eee; font-size: 0.8rem;">
+                            {{this.status}}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="/ordens/edit/{{this.id}}" class="btn btn-edit">Editar</a>
+                        <form action="/ordens/delete/{{this.id}}" method="POST" style="display:inline;" onsubmit="return confirm('Deletar esta O.S.?');">
+                            <button type="submit" class="btn btn-delete">X</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    {{else}}
+        <p>Nenhuma ordem de serviço encontrada.</p>
+    {{/if}}
+</div>

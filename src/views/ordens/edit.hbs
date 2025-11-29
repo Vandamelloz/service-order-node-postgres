@@ -1,0 +1,23 @@
+<div class="card">
+    <h2>Editar O.S. #{{ordem.id}}</h2>
+    <form action="/ordens/update/{{ordem.id}}" method="POST">
+        <label>Título:</label>
+        <input type="text" name="titulo" value="{{ordem.titulo}}" required>
+
+        <label>Descrição:</label>
+        <textarea name="descricao" required>{{ordem.descricao}}</textarea>
+
+        <label>Status Atual: <strong>{{ordem.status}}</strong></label>
+        <select name="status">
+            <option value="Pendente">Pendente</option>
+            <option value="Em Andamento">Em Andamento</option>
+            <option value="Concluída">Concluída</option>
+            <option value="Cancelada">Cancelada</option>
+        </select>
+        <small style="color: #666;">Selecione o novo status da ordem.</small>
+
+        <br><br>
+        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+        <a href="/ordens" class="btn" style="background:#7f8c8d; color:white;">Cancelar</a>
+    </form>
+</div>

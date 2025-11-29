@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gerenciamento de OS</title>
+    <style>
+        /* Reset básico e Fontes */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; color: #333; line-height: 1.6; }
+        
+        /* Layout e Container */
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        
+        /* Navegação */
+        nav { background-color: #2c3e50; padding: 15px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        nav ul { list-style: none; text-align: center; }
+        nav ul li { display: inline; margin: 0 15px; }
+        nav a { color: #ecf0f1; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: color 0.3s; }
+        nav a:hover { color: #3498db; }
+
+        /* Títulos e Textos */
+        h1, h2 { color: #2c3e50; margin-bottom: 20px; }
+        
+        /* Tabelas */
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        th { background-color: #3498db; color: white; text-align: left; padding: 12px 15px; }
+        td { padding: 12px 15px; border-bottom: 1px solid #ddd; }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        tr:hover { background-color: #e9ecef; }
+
+        /* Botões */
+        .btn { display: inline-block; padding: 8px 15px; border-radius: 4px; text-decoration: none; font-size: 0.9rem; cursor: pointer; border: none; transition: background 0.3s; }
+        .btn-primary { background-color: #27ae60; color: white; margin-bottom: 15px; } /* Verde */
+        .btn-primary:hover { background-color: #219150; }
+        .btn-edit { background-color: #f39c12; color: white; } /* Laranja */
+        .btn-delete { background-color: #e74c3c; color: white; } /* Vermelho */
+        
+        /* Formulários */
+        form label { font-weight: bold; display: block; margin-top: 10px; }
+        input[type="text"], input[type="email"], textarea, select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ddd; border-radius: 4px; display: block; }
+        textarea { height: 100px; resize: vertical; }
+        
+        /* Alertas/Cards */
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="/">🏠 Início</a></li>
+            <li><a href="/clientes">👥 Clientes</a></li>
+            <li><a href="/tecnicos">🔧 Técnicos</a></li>
+            <li><a href="/ordens">📝 Ordens de Serviço</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        {{{body}}}
+    </div>
+
+</body>
+</html>
