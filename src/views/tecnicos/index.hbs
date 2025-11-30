@@ -1,20 +1,34 @@
 <div class="card">
-    <h2>Editar Cliente</h2>
-    <form action="/clientes/update/{{cliente.id}}" method="POST">
-        <label>Nome:</label>
-        <input type="text" name="nome" value="{{cliente.nome}}" required>
+    <h2>🔧 Gerenciar Técnicos</h2>
+    <a href="/tecnicos/new" class="btn btn-primary">+ Novo Técnico</a>
 
-        <label>Email:</label>
-        <input type="email" name="email" value="{{cliente.email}}">
-
-        <label>Telefone:</label>
-        <input type="text" name="telefone" value="{{cliente.telefone}}">
-
-        <label>Endereço:</label>
-        <input type="text" name="endereco" value="{{cliente.endereco}}">
-
-        <br>
-        <button type="submit" class="btn btn-primary">Atualizar</button>
-        <a href="/clientes" class="btn" style="background:#7f8c8d; color:white;">Cancelar</a>
-    </form>
+    {{#if tecnicos}}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Especialidade</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each tecnicos}}
+                <tr>
+                    <td>{{this.id}}</td>
+                    <td>{{this.nome}}</td>
+                    <td>{{this.especialidade}}</td>
+                    <td>
+                        <a href="/tecnicos/edit/{{this.id}}" class="btn btn-edit">Editar</a>
+                        <form action="/tecnicos/delete/{{this.id}}" method="POST" style="display:inline;" onsubmit="return confirm('Excluir este técnico?');">
+                            <button type="submit" class="btn btn-delete">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    {{else}}
+        <p>Nenhum técnico cadastrado.</p>
+    {{/if}}
 </div>

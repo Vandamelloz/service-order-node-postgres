@@ -1,6 +1,6 @@
 import { Ordem as Ordens } from "../models/ordens.js";
-import { Cliente } from "../models/cliente.js"; // Necessário para os dropdowns
-import { Tecnico } from "../models/tecnicos.js"; // Necessário para os dropdowns (se tiver model Tecnico)
+import { Cliente } from "../models/cliente.js"; 
+import { Tecnico } from "../models/tecnicos.js";
 
 class OrdensController {
 

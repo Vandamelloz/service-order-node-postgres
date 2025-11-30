@@ -18,5 +18,3 @@ export const sequelize = new Sequelize(
     }
 );
 
-// NOTA: O teste de conexão foi MOVIDO para server.js (Passo 6)
-// Isso garante que o servidor só suba se o BD estiver online.

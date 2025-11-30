@@ -6,7 +6,6 @@ class ClienteController {
     static async listAll(req, res) {
         try {
             const clientes = await Cliente.findAll({ raw: true }); // 'raw: true' ajuda no Handlebars
-            // Renderiza a view 'clientes/index.hbs' passando a lista
             res.render("clientes/index", { clientes });
         } catch (err) {
             console.error(err);
@@ -16,7 +15,7 @@ class ClienteController {
 
     // [C] CREATE (GET) - Renderiza o formulário de cadastro
     static createForm(req, res) {
-        res.render("clientes/new"); // Renderiza 'src/views/clientes/new.hbs'
+        res.render("clientes/new"); 
     }
 
     // [C] CREATE (POST) - Recebe dados e Salva
