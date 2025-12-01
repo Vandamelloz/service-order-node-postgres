@@ -1,4 +1,3 @@
-// src/server.js
 import express from 'express';
 import { engine } from 'express-handlebars';
 import path from 'path';

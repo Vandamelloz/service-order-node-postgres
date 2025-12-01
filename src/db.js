@@ -1,5 +1,3 @@
-// src/db.js
-
 import pkg from 'sequelize';
 import dotenv from 'dotenv';
 
